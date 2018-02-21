@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="day_template_agenda_factory_view" model="ir.ui.view">
+            <field name="name">Day Template Agenda Factory View</field>
+            <field name="model">day.template.agenda.factory</field>
+            <!-- <field name="type">form</field> deprecated-->
+            <field name="arch" type="xml">
+                <form string="New agenda_Factory" version="7.0">
+                    <field name="name"/>
+                    <field name="date" required="1"/>
+                    <field name="day_template_id" required="1"/>
+                    <button string="Cancel" special="cancel" icon="gtk-cancel"/>
+                    <button name="create_slot" string="Create Slots"  type="object" icon="gtk-ok" context="{'day_template_id':day_template_id}"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_day_template_agenda_factory" model="ir.actions.act_window">
+            <field name="name">Day Template Agenda Factory Action</field>
+            <field name="res_model">day.template.agenda.factory</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Day Template Agenda Factory" id="menu_day_template_agenda_factory" action="action_day_template_agenda_factory"
+            parent="mail.mail_my_stuff" sequence="15"/>
+    
+        </data>
+</openerp>

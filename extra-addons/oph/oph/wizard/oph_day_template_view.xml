@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- RESOURCE OPH.TAG.AGENDA -->
+        <!-- TREE VIEW -->
+        <record model="ir.ui.view" id="tag_tree_view_id">
+            <field name="name">tag.tree</field>
+            <field name="model">oph.tag.agenda</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="name"/>
+                    <field name="duration"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <!-- FORM VIEW -->
+        <record model="ir.ui.view" id="tag_agenda_form_view_id">
+            <field name="name"> oph.agenda.form</field>
+            <field name="model">oph.tag.agenda</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Agenda Tag" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="duration" help="Set a default duration"/>
+                        <field name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- RESOURCE OPH.SLOT  VIEWS-->
+        <!-- TREE VIEW SLOTS-->
+        <record model="ir.ui.view" id="slot_tree_view_id">
+            <field name="name">slot..tree</field>
+            <field name="model">oph.slot</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="start_time" on_change="onchange_check_format(start_time)"/>
+                    <field name="duration"/>
+                    <field name="tag_id"/>
+                </tree>
+            </field>
+        </record>
+        <!-- FORM VIEW SLOT-->
+        <record model="ir.ui.view" id="slot_form_view_id">
+            <field name="name"> slot.form</field>
+            <field name="model">oph.slot</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Filling Template" version="7.0">
+                    <group>
+                        <field name="start_time" on_change="onchange_check_format(start_time)"/>
+                        <field name="tag_id" context="{'tag_id':tag_id}" on_change="onchange_tag(context)"/>
+                        <field name="duration"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <!-- RESOURCE  OPH.DAY.TEMPLATE  VIEWS-->
+        <!-- DAY TEMPLATE TREE VIEW -->
+        <record model="ir.ui.view" id="day_template_tree_view_id">
+            <field name="name">day.template.tree</field>
+            <field name="model">oph.day.template</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="name"/>
+                    <field name="comment"/>
+                    <!--<field name="slot_ids" widget="one2many"/>-->
+                </tree>
+            </field>
+        </record>
+        <!-- FORM VIEW DAY TEMPLATE-->
+        <record model="ir.ui.view" id="day_template_form_view_id">
+            <field name="name"> day.template.form</field>
+            <field name="model">oph.day.template</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Filling Template" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="comment"/>
+                        <field name="slot_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <!-- END VIEW -->
+        
+
+        <!-- ACTIONS / MENUITEM -->
+         <!-- OPH TAG AGENDA ACTION -->
+        <record model="ir.actions.act_window" id="oph_tag_agenda_action_id">
+            <field name="name">Tag Agenda</field>
+            <field name="res_model">oph.tag.agenda</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="tag_tree_view_id"/>
+        </record>
+        <!-- OPH SLOT ACTION -->
+        <record model="ir.actions.act_window" id="oph_slot_action_id">
+            <field name="name">Slot</field>
+            <field name="res_model">oph.slot</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="slot_tree_view_id"/>
+        </record>
+        <!-- OPH DAY TEMPLATE ACTION -->
+        <record model="ir.actions.act_window" id="oph_day_template_action_id">
+            <field name="name">Day Template</field>
+            <field name="res_model">oph.day.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="day_template_tree_view_id"/>
+        </record>
+
+        <!-- OPH TAG AGENDA MENU -->
+        <menuitem parent="config_oph_id" id="oph_tag_agenda_menu_id" sequence ="110" action="oph_tag_agenda_action_id"/>
+        <!-- OPH SLOT MENU-->
+        
+<!--
+         j'ai pas envie de voir les slots car ne sert à rien
+        <menuitem parent="config_oph_id" id="oph_slot_menu_id" sequence ="90" action="oph_slot_action_id"/>
+
+        -->
+
+        <!--DAY TEMPLATE MENU-->
+        <menuitem parent="config_oph_id" id="oph_day_template_menu_id" sequence="120" action="oph_day_template_action_id"/>
+
+
+    </data>
+</openerp>
